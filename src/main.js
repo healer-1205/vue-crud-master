@@ -9,9 +9,9 @@ Vue.use(VueResource);
 import App from './App.vue'
 
 import AllProducts from './assets/js/components/all-products.vue';
-const CreateProduct = require('./assets/js/components/create-product.vue');
-const EditProduct = require('./assets/js/components/edit-product.vue');
-const DeleteProduct = require('./assets/js/components/delete-product.vue');
+import CreateProduct from './assets/js/components/create-product.vue';
+import EditProduct from './assets/js/components/edit-product.vue';
+import DeleteProduct from './assets/js/components/delete-product.vue';
 
 const routes = [
     {
