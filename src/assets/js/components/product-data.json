@@ -1,0 +1,22 @@
+[
+    {
+        "id": 1,
+        "name": "Fire TV Stick",
+        "price": "32.99"
+    },
+    {
+        "id": 2,
+        "name": "Amazon Echo Dot",
+        "price": "49.99"
+    },
+    {
+        "id": 3,
+        "name": "Amazon Echo, Black",
+        "price": "149.99"
+    },
+    {
+        "id": 4,
+        "name": "Fire Tablet, 7",
+        "price": "47.49"
+    }
+]
