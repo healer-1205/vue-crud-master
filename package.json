@@ -4,12 +4,14 @@
   "author": "Paulund",
   "private": true,
   "scripts": {
+    "start": "concurrently \"set NODE_ENV=development && npm run dev\" \"npm run backend\"",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --inline --hot",
     "backend": "nodemon server.js",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
     "body-parser": "^1.4.3",
+    "concurrently": "^6.3.0",
     "express": "^4.4.5",
     "nodemon": "^2.0.14",
     "vue": "^2.0.1"
