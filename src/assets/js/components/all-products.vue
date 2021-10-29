@@ -7,7 +7,6 @@
         <div class="form-group">
             <input type="text" name="search" v-model="productSearch" placeholder="Search products" class="form-control" v-on:keyup="searchProducts">
         </div>
-
         <table class="table table-hover">
             <thead>
             <tr>
@@ -67,11 +66,10 @@
                     this.products = this.originalProducts;
                     return;
                 }
-
-                var searchedProducts = [];
-                for(var i = 0; i < this.originalProducts.length; i++)
+                let searchedProducts = [];
+                for(let i = 0; i < this.originalProducts.length; i++)
                 {
-                    var productName = this.originalProducts[i]['name'].toLowerCase();
+                    let productName = this.originalProducts[i]['name'].toLowerCase();
                     if(productName.indexOf(this.productSearch.toLowerCase()) >= 0)
                     {
                         searchedProducts.push(this.originalProducts[i]);

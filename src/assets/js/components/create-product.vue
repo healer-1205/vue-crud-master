@@ -2,7 +2,7 @@
     <div id="create-product">
         <h1>Create Product</h1>
 
-        <p><router-link :to="{ name: 'all_products' }">Return to products</router-link></p>
+        <p><router-link :to="{ name: 'all_products' }" class="btn btn-warning">Return to products</router-link></p>
 
         <notification v-bind:notifications="notifications"></notification>
 
@@ -31,6 +31,7 @@
 
 <script>
     import Notification from './notifications.vue';
+    import axios from 'axios';
 
     export default{
         data(){
@@ -56,7 +57,7 @@
                     this.product.price = this.product.price;
                 }
 
-                this.$http.post('http://localhost:3000/api/product/create', this.product, {
+                axios.post('http://localhost:3000/api/product/create', this.product, {
                     headers : {
                         'Content-Type' : 'application/json'
                     }
