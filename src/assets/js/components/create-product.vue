@@ -4,7 +4,7 @@
 
         <p><router-link :to="{ name: 'all_products' }" class="btn btn-warning">Return to products</router-link></p>
 
-        <notification v-bind:notifications="notifications"></notification>
+        <notification v-bind:notifications="apples"></notification>
 
         <form v-on:submit.prevent="addProduct">
             <div class="form-group">

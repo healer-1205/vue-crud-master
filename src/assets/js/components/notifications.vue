@@ -21,6 +21,6 @@
             }
         },
 
-        props: ['notifications']
+        props: ['apples']
     }
 </script>
