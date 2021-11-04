@@ -55,7 +55,6 @@ app.get('/api/product/:id', (req, res) => {
 });
 
 app.post('/api/task/create', (req, res) => {
-    console.log("products");
   fs.readFile(TASKS_FILE, (err, data) => {
     if (err) {
       console.error(err);
@@ -63,7 +62,7 @@ app.post('/api/task/create', (req, res) => {
     }
     const products = JSON.parse(data);
     const newProduct = {
-      id: Date.now(),
+      id: products.length + 1,
       name: req.body.name,
       price: req.body.price,
     };

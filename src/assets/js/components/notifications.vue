@@ -20,6 +20,6 @@ export default {
     },
   },
 
-  props: ['apples'],
+  props: ['notifications'],
 };
 </script>

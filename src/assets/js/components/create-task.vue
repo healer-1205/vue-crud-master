@@ -10,38 +10,27 @@
       </router-link>
     </p>
 
-    <notification v-bind:notifications="apples"></notification>
+    <notification v-bind:notifications="notifications"></notification>
 
     <form v-on:submit.prevent="addTask">
-      <div class="form-group">
-        <label name="task_id">ID</label>
-        <input
-          type="text"
-          class="form-control"
-          disabled
-          v-model="product.id"
-          id="task_id"
-        />
-      </div>
-
       <div class="form-group">
         <label name="task_name">Name</label>
         <input
           type="text"
           class="form-control"
-          v-model="product.name"
+          v-model="task.name"
           id="task_name"
           required
         />
       </div>
 
       <div class="form-group">
-        <label name="task_price">Price</label>
+        <label name="task_status">Status</label>
         <input
           type="text"
           class="form-control"
-          v-model="product.price"
-          id="task_price"
+          v-model="task.price"
+          id="task_status"
           required
         />
       </div>
@@ -60,7 +49,7 @@ import Notification from './notifications.vue';
 export default {
   data() {
     return {
-      product: {},
+      task: {},
       notifications: [],
     };
   },
@@ -68,7 +57,7 @@ export default {
   methods: {
     addTask() {
       // Validation
-      const price = parseFloat(this.product.price);
+      const price = parseFloat(this.task.price);
       if (isNaN(price)) {
         this.notifications.push({
           type: 'danger',
@@ -76,10 +65,10 @@ export default {
         });
         return false;
       }
-      this.product.price = this.product.price;
+      this.task.price = this.task.price;
 
       axios
-        .post('http://localhost:3000/api/task/create', this.product, {
+        .post('http://localhost:3000/api/task/create', this.task, {
           headers: {
             'Content-Type': 'application/json',
           },
