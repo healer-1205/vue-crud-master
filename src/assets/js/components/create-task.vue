@@ -1,47 +1,47 @@
 <template>
-  <div id="create-product">
-    <h1>Create Product</h1>
+  <div id="create-task">
+    <h1>Create Task</h1>
 
     <p>
       <router-link
-        :to="{ name: 'all_products' }"
+        :to="{ name: 'all_tasks' }"
         class="btn btn-warning">
-        Return to products
+        Return to tasks
       </router-link>
     </p>
 
     <notification v-bind:notifications="apples"></notification>
 
-    <form v-on:submit.prevent="addProduct">
+    <form v-on:submit.prevent="addTask">
       <div class="form-group">
-        <label name="product_id">ID</label>
+        <label name="task_id">ID</label>
         <input
           type="text"
           class="form-control"
           disabled
           v-model="product.id"
-          id="product_id"
+          id="task_id"
         />
       </div>
 
       <div class="form-group">
-        <label name="product_name">Name</label>
+        <label name="task_name">Name</label>
         <input
           type="text"
           class="form-control"
           v-model="product.name"
-          id="product_name"
+          id="task_name"
           required
         />
       </div>
 
       <div class="form-group">
-        <label name="product_price">Price</label>
+        <label name="task_price">Price</label>
         <input
           type="text"
           class="form-control"
           v-model="product.price"
-          id="product_price"
+          id="task_price"
           required
         />
       </div>
@@ -66,7 +66,7 @@ export default {
   },
 
   methods: {
-    addProduct() {
+    addTask() {
       // Validation
       const price = parseFloat(this.product.price);
       if (isNaN(price)) {
@@ -79,7 +79,7 @@ export default {
       this.product.price = this.product.price;
 
       axios
-        .post('http://localhost:3000/api/product/create', this.product, {
+        .post('http://localhost:3000/api/task/create', this.product, {
           headers: {
             'Content-Type': 'application/json',
           },
@@ -88,13 +88,13 @@ export default {
           () => {
             this.notifications.push({
               type: 'success',
-              message: 'Product created successfully',
+              message: 'Task created successfully',
             });
           },
           () => {
             this.notifications.push({
               type: 'error',
-              message: 'Product not created',
+              message: 'Task not created',
             });
           },
         );

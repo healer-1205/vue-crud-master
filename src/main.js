@@ -6,34 +6,34 @@ import VueResource from 'vue-resource';
 
 import App from './App.vue';
 
-import AllProducts from './assets/js/components/all-products.vue';
-import CreateProduct from './assets/js/components/create-product.vue';
-import EditProduct from './assets/js/components/edit-product.vue';
-import DeleteProduct from './assets/js/components/delete-product.vue';
+import AllTasks from './assets/js/components/all-tasks.vue';
+import CreateTask from './assets/js/components/create-task.vue';
+import EditTask from './assets/js/components/edit-task.vue';
+import DeleteTask from './assets/js/components/delete-task.vue';
 
 Vue.use(VueRouter);
 Vue.use(VueResource);
 
 const routes = [
   {
-    name: 'all_products',
+    name: 'all_tasks',
     path: '/',
-    component: AllProducts,
+    component: AllTasks,
   },
   {
-    name: 'create_product',
-    path: '/products/create',
-    component: CreateProduct,
+    name: 'create_task',
+    path: '/tasks/create',
+    component: CreateTask,
   },
   {
-    name: 'edit_product',
-    path: '/products/edit/:id',
-    component: EditProduct,
+    name: 'edit_task',
+    path: '/tasks/edit/:id',
+    component: EditTask,
   },
   {
-    name: 'delete_product',
-    path: '/products/delete/:id',
-    component: DeleteProduct,
+    name: 'delete_task',
+    path: '/tasks/delete/:id',
+    component: DeleteTask,
   },
 ];
 const router = new VueRouter({ routes, mode: 'history' });

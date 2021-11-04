@@ -3,7 +3,7 @@
     <h1>Update Product</h1>
 
     <p>
-      <router-link :to="{ name: 'all_products' }" class="btn btn-warning"
+      <router-link :to="{ name: 'all_tasks' }" class="btn btn-warning"
         >Return to products
       </router-link>
     </p>

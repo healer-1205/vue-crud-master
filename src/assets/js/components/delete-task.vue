@@ -3,7 +3,7 @@
     <h1>Delete Product {{ product.name }}</h1>
 
     <p>
-      <router-link :to="{ name: 'all_products' }" class="btn btn-warning"
+      <router-link :to="{ name: 'all_tasks' }" class="btn btn-warning"
         >Return to products</router-link
       >
     </p>
@@ -56,7 +56,7 @@ export default {
         )
         .then(
           (response) => {
-            this.$router.push({ name: "all_products" });
+            this.$router.push({ name: "all_tasks" });
           },
           (response) => {
             this.notifications.push({

@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
-const PRODUCTS_FILE = path.join(__dirname, 'src/assets/js/components/product-data.json');
+const TASKS_FILE = path.join(__dirname, 'src/assets/js/components/task-data.json');
 
 app.set('port', (process.env.PORT || 3000));
 
@@ -26,8 +26,8 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/api/products', (req, res) => {
-  fs.readFile(PRODUCTS_FILE, (err, data) => {
+app.get('/api/tasks', (req, res) => {
+  fs.readFile(TASKS_FILE, (err, data) => {
     if (err) {
       console.error(err);
       process.exit(1);
@@ -37,7 +37,7 @@ app.get('/api/products', (req, res) => {
 });
 
 app.get('/api/product/:id', (req, res) => {
-  fs.readFile(PRODUCTS_FILE, (err, data) => {
+  fs.readFile(TASKS_FILE, (err, data) => {
     if (err) {
       console.error(err);
       process.exit(1);
@@ -54,21 +54,21 @@ app.get('/api/product/:id', (req, res) => {
   });
 });
 
-app.post('/api/product/create', (req, res) => {
-  fs.readFile(PRODUCTS_FILE, (err, data) => {
+app.post('/api/task/create', (req, res) => {
+    console.log("products");
+  fs.readFile(TASKS_FILE, (err, data) => {
     if (err) {
       console.error(err);
       process.exit(1);
     }
     const products = JSON.parse(data);
-
     const newProduct = {
       id: Date.now(),
       name: req.body.name,
       price: req.body.price,
     };
     products.push(newProduct);
-    fs.writeFile(PRODUCTS_FILE, JSON.stringify(products, null, 4), (err) => {
+    fs.writeFile(TASKS_FILE, JSON.stringify(products, null, 4), (err) => {
       if (err) {
         console.error(err);
         process.exit(1);
@@ -79,7 +79,7 @@ app.post('/api/product/create', (req, res) => {
 });
 
 app.patch('/api/product/edit/:id', (req, res) => {
-  fs.readFile(PRODUCTS_FILE, (err, data) => {
+  fs.readFile(TASKS_FILE, (err, data) => {
     if (err) {
       console.error(err);
       process.exit(1);
@@ -95,7 +95,7 @@ app.patch('/api/product/edit/:id', (req, res) => {
         products.splice(i, 1);
         products.push(product);
 
-        fs.writeFile(PRODUCTS_FILE, JSON.stringify(products, null, 4), (err) => {
+        fs.writeFile(TASKS_FILE, JSON.stringify(products, null, 4), (err) => {
           if (err) {
             console.error(err);
             process.exit(1);
@@ -109,7 +109,7 @@ app.patch('/api/product/edit/:id', (req, res) => {
 });
 
 app.delete('/api/product/delete/:id', (req, res) => {
-  fs.readFile(PRODUCTS_FILE, (err, data) => {
+  fs.readFile(TASKS_FILE, (err, data) => {
     if (err) {
       console.error(err);
       process.exit(1);
@@ -120,7 +120,7 @@ app.delete('/api/product/delete/:id', (req, res) => {
       if (products[i].id == req.params.id) {
         products.splice(i, 1);
 
-        fs.writeFile(PRODUCTS_FILE, JSON.stringify(products, null, 4), (err) => {
+        fs.writeFile(TASKS_FILE, JSON.stringify(products, null, 4), (err) => {
           if (err) {
             console.error(err);
             process.exit(1);
