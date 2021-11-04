@@ -85,13 +85,13 @@ export default {
           },
         })
         .then(
-          (response) => {
+          () => {
             this.notifications.push({
               type: 'success',
               message: 'Product created successfully',
             });
           },
-          (response) => {
+          () => {
             this.notifications.push({
               type: 'error',
               message: 'Product not created',
