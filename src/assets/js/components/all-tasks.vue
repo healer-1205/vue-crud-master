@@ -86,7 +86,6 @@ export default {
         (response) => {
           this.tasks = response.body;
           this.originalTasks = this.tasks;
-          console.log(this.originalTasks);
         },
         () => {}
       );
@@ -98,10 +97,13 @@ export default {
         return;
       }
       const searchedStatus = [];
-      for (let i = 0; i < this.originalTasks.length; i+=1) {
-        const taskStatus = originalTasks[i].price.toLowerCase();
-        
+      for (let i = 0; i < this.originalTasks.length; i += 1) {
+        const taskStatus = this.originalTasks[i].status.toLowerCase();
+        if (taskStatus === this.statusSearch) {
+          searchedStatus.push(this.originalTasks[i]);
+        }
       }
+      this.tasks = searchedStatus;
     },
 
     searchTasks() {
