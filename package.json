@@ -1,7 +1,7 @@
 {
-  "name": "vuejs-crud-application",
-  "description": "A demo application to show how to build a crud application with VueJS",
-  "author": "Paulund",
+  "name": "vuejs-TODO-application",
+  "description": "A VueJS Project Test",
+  "author": "Tomas Jefferson",
   "private": true,
   "scripts": {
     "start": "concurrently \"set NODE_ENV=development && npm run dev\" \"npm run backend\"",
@@ -13,6 +13,7 @@
     "axios": "^0.24.0",
     "body-parser": "^1.4.3",
     "concurrently": "^6.3.0",
+    "eslint": "^8.1.0",
     "express": "^4.4.5",
     "nodemon": "^2.0.14",
     "vue": "^2.0.1"
