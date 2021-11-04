@@ -7,20 +7,19 @@
 </template>
 
 <script>
-    export default{
-        data(){
-            return{
+export default {
+  data() {
+    return {
 
-            }
-        },
+    };
+  },
 
-        methods: {
-            getNotificationClass: function(notification)
-            {
-                return 'alert alert-' + notification.type;
-            }
-        },
+  methods: {
+    getNotificationClass(notification) {
+      return `alert alert-${notification.type}`;
+    },
+  },
 
-        props: ['apples']
-    }
+  props: ['apples'],
+};
 </script>

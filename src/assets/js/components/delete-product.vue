@@ -13,49 +13,47 @@
 </template>
 
 <script>
-    import Notification from './notifications.vue';
+import Notification from './notifications.vue';
 
-    export default{
-        data(){
-            return{
-                product:{},
-                notifications:[]
-            }
+export default {
+  data() {
+    return {
+      product: {},
+      notifications: [],
+    };
+  },
+
+  created() {
+    this.getProduct();
+  },
+
+  methods: {
+    getProduct() {
+      this.$http.get(`http://localhost:3000/api/product/${this.$route.params.id}`).then((response) => {
+        this.product = response.body;
+      }, (response) => {
+
+      });
+    },
+
+    deleteProduct() {
+      this.$http.delete(`http://localhost:3000/api/product/delete/${this.$route.params.id}`, this.product, {
+        headers: {
+          'Content-Type': 'application/json',
         },
+      }).then((response) => {
+        this.$router.push({ name: 'all_products' });
+      }, (response) => {
+        this.notifications.push({
+          type: 'danger',
+          message: 'Product could not deleted',
+        });
+      });
+    },
+  },
 
-        created: function(){
-            this.getProduct();
-        },
-
-        methods: {
-            getProduct: function()
-            {
-                this.$http.get('http://localhost:3000/api/product/' + this.$route.params.id).then((response) => {
-                    this.product = response.body;
-                }, (response) => {
-
-                });
-            },
-
-            deleteProduct: function()
-            {
-                this.$http.delete('http://localhost:3000/api/product/delete/' + this.$route.params.id, this.product, {
-                    headers : {
-                        'Content-Type' : 'application/json'
-                    }
-                }).then((response) => {
-                    this.$router.push({name: 'all_products'})
-                }, (response) => {
-                    this.notifications.push({
-                        type: 'danger',
-                        message: 'Product could not deleted'
-                    });
-                });
-            }
-        },
-
-        components: {
-            'notification' : Notification
-        }
-    }
+  components: {
+    notification: Notification,
+  },
+};
 </script>

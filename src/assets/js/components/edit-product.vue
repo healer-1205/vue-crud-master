@@ -30,63 +30,60 @@
 </template>
 
 <script>
-    import Notification from './notifications.vue';
+import Notification from './notifications.vue';
 
-    export default{
-        data(){
-            return{
-                product:{},
-                notifications:[]
-            }
+export default {
+  data() {
+    return {
+      product: {},
+      notifications: [],
+    };
+  },
+
+  created() {
+    this.getProduct();
+  },
+
+  methods: {
+    getProduct() {
+      this.$http.get(`http://localhost:3000/api/product/${this.$route.params.id}`).then((response) => {
+        this.product = response.body;
+      }, (response) => {
+
+      });
+    },
+
+    editProduct() {
+      // Validation
+      const price = parseFloat(this.product.price);
+      if (isNaN(price)) {
+        this.notifications.push({
+          type: 'danger',
+          message: 'Price must be a number',
+        });
+        return false;
+      }
+
+      this.$http.patch(`http://localhost:3000/api/product/edit/${this.$route.params.id}`, this.product, {
+        headers: {
+          'Content-Type': 'application/json',
         },
+      }).then((response) => {
+        this.notifications.push({
+          type: 'success',
+          message: 'Product updated successfully',
+        });
+      }, (response) => {
+        this.notifications.push({
+          type: 'error',
+          message: 'Product not updated',
+        });
+      });
+    },
+  },
 
-        created: function(){
-            this.getProduct();
-        },
-
-        methods: {
-            getProduct: function()
-            {
-                this.$http.get('http://localhost:3000/api/product/' + this.$route.params.id).then((response) => {
-                    this.product = response.body;
-                }, (response) => {
-
-                });
-            },
-
-            editProduct: function()
-            {
-                // Validation
-                var price = parseFloat(this.product.price);
-                if(isNaN(price))
-                {
-                    this.notifications.push({
-                        type: 'danger',
-                        message: 'Price must be a number'
-                    });
-                    return false;
-                }
-
-                this.$http.patch('http://localhost:3000/api/product/edit/' + this.$route.params.id, this.product, {
-                    headers : {
-                        'Content-Type' : 'application/json'
-                    }
-                }).then((response) => {
-                    this.notifications.push({
-                        type: 'success',
-                        message: 'Product updated successfully'
-                    });
-                }, (response) => {
-                    this.notifications.push({
-                        type: 'error',
-                        message: 'Product not updated'
-                    });
-                });
-            }
-        },
-
-        components: {
-            'notification' : Notification
-        }
-    }
+  components: {
+    notification: Notification,
+  },
+};
 </script>
