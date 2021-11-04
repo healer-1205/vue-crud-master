@@ -3,9 +3,7 @@
     <h1>Create Task</h1>
 
     <p>
-      <router-link
-        :to="{ name: 'all_tasks' }"
-        class="btn btn-warning">
+      <router-link :to="{ name: 'all_tasks' }" class="btn btn-warning">
         Return to tasks
       </router-link>
     </p>
@@ -18,6 +16,7 @@
         <input
           type="text"
           class="form-control"
+          style="width: 100%"
           v-model="task.name"
           id="task_name"
           required
@@ -26,13 +25,17 @@
 
       <div class="form-group">
         <label name="task_status">Status</label>
-        <input
-          type="text"
+        <select
+          name="status"
+          id=""
           class="form-control"
-          v-model="task.price"
-          id="task_status"
-          required
-        />
+          style="width: 100%"
+          v-model="task.status"
+        >
+          <option disabled value="">Select Task Status</option>
+          <option value="pending">Pending</option>
+          <option value="finished">Finished</option>
+        </select>
       </div>
 
       <div class="form-group">
@@ -43,13 +46,17 @@
 </template>
 
 <script>
-import axios from 'axios';
-import Notification from './notifications.vue';
+import axios from "axios";
+import Notification from "./notifications.vue";
+import * as constant from "../constant.js";
 
 export default {
   data() {
     return {
-      task: {},
+      task: {
+        name: "",
+        status: ""
+      },
       notifications: [],
     };
   },
@@ -57,35 +64,32 @@ export default {
   methods: {
     addTask() {
       // Validation
-      const price = parseFloat(this.task.price);
-      if (isNaN(price)) {
+      if (this.task.status === "") {
         this.notifications.push({
-          type: 'danger',
-          message: 'Price must be a number',
+          type: "danger",
+          message: "You must select task status",
         });
         return false;
       }
-      this.task.price = this.task.price;
-
       axios
-        .post('http://localhost:3000/api/task/create', this.task, {
+        .post("http://" + constant.HOST + ":3000/api/task/create", this.task, {
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         })
         .then(
           () => {
             this.notifications.push({
-              type: 'success',
-              message: 'Task created successfully',
+              type: "success",
+              message: "Task created successfully",
             });
           },
           () => {
             this.notifications.push({
-              type: 'error',
-              message: 'Task not created',
+              type: "error",
+              message: "Task not created",
             });
-          },
+          }
         );
     },
   },

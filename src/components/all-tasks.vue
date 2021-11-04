@@ -18,9 +18,16 @@
           v-on:keyup="searchTasks"
         />
       </div>
-      <div class="form-group" style="margin-left: 15px;">
-        <select name="status" id="" class="form-control" v-model="statusSearch" v-on:change="searchStatus">
+      <div class="form-group" style="margin-left: 15px">
+        <select
+          name="status"
+          id=""
+          class="form-control"
+          v-model="statusSearch"
+          v-on:change="searchStatus"
+        >
           <option disabled value="">Select Task Status</option>
+          <option value="">All</option>
           <option value="pending">pending</option>
           <option value="finished">finished</option>
         </select>
@@ -54,6 +61,7 @@
             >
               Delete
             </router-link>
+            <button class="btn btn-info" @click="changeStatus(task.id)">Done</button>
           </td>
         </tr>
       </tbody>
@@ -62,6 +70,8 @@
 </template>
 
 <script>
+import * as constant from "../constant.js";
+
 export default {
   data() {
     return {
@@ -82,18 +92,45 @@ export default {
 
   methods: {
     fetchTaskData() {
-      this.$http.get("http://localhost:3000/api/tasks").then(
+      this.$http.get("http://" + constant.HOST + ":3000/api/tasks").then(
         (response) => {
           this.tasks = response.body;
-          this.originalTasks = this.tasks;
+          this.originalTasks = response.body;
         },
         () => {}
       );
     },
 
+    changeStatus(id) {
+      this.$http
+        .patch(
+          `http://` + constant.HOST + `:3000/api/task/editStatus/` + id,
+          this.task,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then(
+          (response) => {
+            this.notifications.push({
+              type: "success",
+              message: "Task updated successfully",
+            });
+          },
+          (response) => {
+            this.notifications.push({
+              type: "error",
+              message: "Task not updated",
+            });
+          }
+        );
+    },
+
     searchStatus() {
       if (this.statusSearch === "") {
-        this.task = this.originalTasks;
+        this.tasks = this.originalTasks;
         return;
       }
       const searchedStatus = [];

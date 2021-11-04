@@ -1,47 +1,53 @@
 <template>
-  <div id="update-product">
-    <h1>Update Product</h1>
+  <div id="update-task">
+    <h1>Update Task</h1>
 
     <p>
       <router-link :to="{ name: 'all_tasks' }" class="btn btn-warning"
-        >Return to products
+        >Return to tasks
       </router-link>
     </p>
 
     <notification v-bind:notifications="notifications"></notification>
 
-    <form v-on:submit.prevent="editProduct">
+    <form v-on:submit.prevent="editTask">
       <div class="form-group">
-        <label name="product_id">ID</label>
+        <label name="task_id">ID</label>
         <input
           type="text"
           class="form-control"
+          style="width: 100%"
           disabled
-          v-model="product.id"
-          id="product_id"
+          v-model="task.id"
+          id="task_id"
         />
       </div>
 
       <div class="form-group">
-        <label name="product_name">Name</label>
+        <label name="task_name">Name</label>
         <input
           type="text"
           class="form-control"
-          v-model="product.name"
-          id="product_name"
+          style="width: 100%"
+          v-model="task.name"
+          id="task_name"
           required
         />
       </div>
 
       <div class="form-group">
-        <label name="product_price">Price</label>
-        <input
-          type="text"
+        <label name="task_status">Status</label>
+        <select
+          name="status"
+          id=""
           class="form-control"
-          v-model="product.price"
-          id="product_price"
-          required
-        />
+          style="width: 100%"
+          v-model="task.status"
+        >
+          <option disabled value="">Select Task Status</option>
+          <option value="pending">Pending</option>
+          <option value="finished">Finished</option>
+        </select>
       </div>
 
       <div class="form-group">
@@ -53,46 +59,36 @@
 
 <script>
 import Notification from "./notifications.vue";
+import * as constant from "../constant.js";
 
 export default {
   data() {
     return {
-      product: {},
+      task: {},
       notifications: [],
     };
   },
 
   created() {
-    this.getProduct();
+    this.getTask();
   },
 
   methods: {
-    getProduct() {
+    getTask() {
       this.$http
-        .get(`http://localhost:3000/api/product/${this.$route.params.id}`)
+        .get(`http://` + constant.HOST + `:3000/api/task/${this.$route.params.id}`)
         .then(
           (response) => {
-            this.product = response.body;
-          },
-          (response) => {}
+            this.task = response.body;
+          }
         );
     },
 
-    editProduct() {
-      // Validation
-      const price = parseFloat(this.product.price);
-      if (isNaN(price)) {
-        this.notifications.push({
-          type: "danger",
-          message: "Price must be a number",
-        });
-        return false;
-      }
-
+    editTask() {
       this.$http
         .patch(
-          `http://localhost:3000/api/product/edit/${this.$route.params.id}`,
-          this.product,
+          `http://` + constant.HOST + `:3000/api/task/edit/${this.$route.params.id}`,
+          this.task,
           {
             headers: {
               "Content-Type": "application/json",
@@ -103,13 +99,13 @@ export default {
           (response) => {
             this.notifications.push({
               type: "success",
-              message: "Product updated successfully",
+              message: "Task updated successfully",
             });
           },
           (response) => {
             this.notifications.push({
               type: "error",
-              message: "Product not updated",
+              message: "Task not updated",
             });
           }
         );

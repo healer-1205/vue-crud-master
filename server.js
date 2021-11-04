@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
-const TASKS_FILE = path.join(__dirname, 'src/assets/js/components/task-data.json');
+const TASKS_FILE = path.join(__dirname, 'src/assets/task-data.json');
 
 app.set('port', (process.env.PORT || 3000));
 
@@ -36,7 +36,7 @@ app.get('/api/tasks', (req, res) => {
   });
 });
 
-app.get('/api/product/:id', (req, res) => {
+app.get('/api/task/:id', (req, res) => {
   fs.readFile(TASKS_FILE, (err, data) => {
     if (err) {
       console.error(err);
@@ -60,24 +60,24 @@ app.post('/api/task/create', (req, res) => {
       console.error(err);
       process.exit(1);
     }
-    const products = JSON.parse(data);
+    const tasks = JSON.parse(data);
     const newProduct = {
-      id: products.length + 1,
+      id: tasks.length + 1,
       name: req.body.name,
-      price: req.body.price,
+      status: req.body.status,
     };
-    products.push(newProduct);
-    fs.writeFile(TASKS_FILE, JSON.stringify(products, null, 4), (err) => {
+    tasks.push(newProduct);
+    fs.writeFile(TASKS_FILE, JSON.stringify(tasks, null, 4), (err) => {
       if (err) {
         console.error(err);
         process.exit(1);
       }
-      res.json(products);
+      res.json(tasks);
     });
   });
 });
 
-app.patch('/api/product/edit/:id', (req, res) => {
+app.patch('/api/task/edit/:id', (req, res) => {
   fs.readFile(TASKS_FILE, (err, data) => {
     if (err) {
       console.error(err);
@@ -89,7 +89,7 @@ app.patch('/api/product/edit/:id', (req, res) => {
       if (products[i].id == req.params.id) {
         const product = products[i];
         product.name = req.body.name;
-        product.price = req.body.price;
+        product.status = req.body.status;
 
         products.splice(i, 1);
         products.push(product);
@@ -100,6 +100,35 @@ app.patch('/api/product/edit/:id', (req, res) => {
             process.exit(1);
           }
           res.json(products);
+        });
+        break;
+      }
+    }
+  });
+});
+
+app.patch('/api/task/editStatus/:id', (req, res) => {
+  fs.readFile(TASKS_FILE, (err, data) => {
+    if (err) {
+      console.error(err);
+      process.exit(1);
+    }
+    const tasks = JSON.parse(data);
+
+    for (let i = 0; i <= tasks.length; i++) {
+      if (tasks[i].id == req.params.id) {
+        const task = tasks[i];
+        task.status = "finished";
+
+        tasks.splice(i, 1);
+        tasks.push(task);
+
+        fs.writeFile(TASKS_FILE, JSON.stringify(tasks, null, 4), (err) => {
+          if (err) {
+            console.error(err);
+            process.exit(1);
+          }
+          res.json(tasks);
         });
         break;
       }
@@ -132,6 +161,6 @@ app.delete('/api/product/delete/:id', (req, res) => {
   });
 });
 
-app.listen(app.get('port'), () => {
-  console.log(`Server started: http://localhost:${app.get('port')}/`);
+app.listen(app.get('port'),'0.0.0.0', () => {
+  console.log(`Server started: http://192.168.6.160:${app.get('port')}/`);
 });

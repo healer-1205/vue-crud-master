@@ -6,10 +6,10 @@ import VueResource from 'vue-resource';
 
 import App from './App.vue';
 
-import AllTasks from './assets/js/components/all-tasks.vue';
-import CreateTask from './assets/js/components/create-task.vue';
-import EditTask from './assets/js/components/edit-task.vue';
-import DeleteTask from './assets/js/components/delete-task.vue';
+import AllTasks from './components/all-tasks.vue';
+import CreateTask from './components/create-task.vue';
+import EditTask from './components/edit-task.vue';
+import DeleteTask from './components/delete-task.vue';
 
 Vue.use(VueRouter);
 Vue.use(VueResource);

@@ -51,6 +51,12 @@ body {
     transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
+.btn-info {
+    color: #000;
+    background-color: #0dcaf0;
+    border-color: #0dcaf0;
+}
+
 .btn-primary {
     color: #fff;
     background-color: #007bff;

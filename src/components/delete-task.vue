@@ -18,6 +18,7 @@
 
 <script>
 import Notification from "./notifications.vue";
+import * as constant from "../constant.js";
 
 export default {
   data() {
@@ -34,7 +35,7 @@ export default {
   methods: {
     getProduct() {
       this.$http
-        .get(`http://localhost:3000/api/product/${this.$route.params.id}`)
+        .get(`http://` + constant.HOST + `:3000/api/product/${this.$route.params.id}`)
         .then(
           (response) => {
             this.product = response.body;
@@ -46,7 +47,7 @@ export default {
     deleteProduct() {
       this.$http
         .delete(
-          `http://localhost:3000/api/product/delete/${this.$route.params.id}`,
+          `http://` + constant.HOST + `:3000/api/product/delete/${this.$route.params.id}`,
           this.product,
           {
             headers: {
