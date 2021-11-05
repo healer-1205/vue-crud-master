@@ -54,6 +54,7 @@ body {
 
 .btn:disabled {
     opacity: .65;
+    cursor: default;
 }
 
 .btn-info {

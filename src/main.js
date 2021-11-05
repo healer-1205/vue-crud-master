@@ -1,6 +1,4 @@
 import Vue from 'vue';
-import 'es6-promise/auto';
-import Vuex from 'vuex';
 import VueRouter from 'vue-router';
 
 import VueResource from 'vue-resource';
@@ -11,6 +9,7 @@ import AllTasks from './components/all-tasks.vue';
 import CreateTask from './components/create-task.vue';
 import EditTask from './components/edit-task.vue';
 import DeleteTask from './components/delete-task.vue';
+import store from "./store.js";
 
 Vue.use(VueRouter);
 Vue.use(VueResource);
@@ -38,4 +37,11 @@ const routes = [
   },
 ];
 const router = new VueRouter({ routes, mode: 'history' });
-new Vue(Vue.util.extend({ router }, App)).$mount('#app');
+// new Vue(Vue.util.extend({ router }, App)).$mount('#app');
+new Vue({
+  el: '#app',
+  router,
+  components: { App },
+  store: store,  
+  template: '<App/>'
+})

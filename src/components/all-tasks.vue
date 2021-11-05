@@ -61,10 +61,19 @@
             >
               Delete
             </router-link>
-            <button class="btn btn-info" @click="changeStatus(task.id)" v-if="task.status === 'pending'">
+            <button
+              class="btn btn-info"
+              @click="changeStatus(task.id)"
+              v-if="task.status === 'pending'"
+            >
               Done
             </button>
-            <button class="btn btn-secondary" @click="changeStatus(task.id)" v-else disabled>
+            <button
+              class="btn btn-secondary"
+              @click="changeStatus(task.id)"
+              v-else
+              disabled
+            >
               Done
             </button>
           </td>
@@ -82,8 +91,8 @@ export default {
     return {
       tasks: [],
       originalTasks: [],
-      taskSearch: "",
-      statusSearch: "",
+      taskSearch: this.$store.state.searchValue,
+      statusSearch: this.$store.state.selectedStatus,
       searchField: {
         display: "flex",
         flexDirection: "row",
@@ -101,6 +110,8 @@ export default {
         (response) => {
           this.tasks = response.body;
           this.originalTasks = response.body;
+          this.searchStatus();
+          this.searchTasks();
         },
         () => {}
       );
@@ -117,21 +128,20 @@ export default {
             },
           }
         )
-        .then(
-          (response) => {
-            const Id = response.body.id;
-            this.originalTasks.find((task, index) => {
-              if (task.id === Id) {
-                task.status = response.body.status;
-                this.tasks = this.originalTasks;
-              }
-            });
-            alert("Status Successfully Updated!!!");
-          }
-        );
+        .then((response) => {
+          const Id = response.body.id;
+          this.originalTasks.find((task, index) => {
+            if (task.id === Id) {
+              task.status = response.body.status;
+              this.tasks = this.originalTasks;
+            }
+          });
+          alert("Status Successfully Updated!!!");
+        });
     },
 
     searchStatus() {
+      this.$store.commit('updateStatus', this.statusSearch);
       if (this.statusSearch === "") {
         this.tasks = this.originalTasks;
         return;
@@ -147,6 +157,7 @@ export default {
     },
 
     searchTasks() {
+      this.$store.commit('updateSearchValue', this.taskSearch);
       if (this.taskSearch === "") {
         this.tasks = this.originalTasks;
         return;
@@ -160,6 +171,10 @@ export default {
       }
 
       this.tasks = searchedTasks;
+    },
+
+    updateSearchValue() {
+      this.$store.commit();
     },
   },
 };
