@@ -128,7 +128,7 @@ app.patch('/api/task/editStatus/:id', (req, res) => {
             console.error(err);
             process.exit(1);
           }
-          res.json(tasks);
+          res.json(task);
         });
         break;
       }

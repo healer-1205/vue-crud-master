@@ -1,5 +1,6 @@
 import Vue from 'vue';
-
+import 'es6-promise/auto';
+import Vuex from 'vuex';
 import VueRouter from 'vue-router';
 
 import VueResource from 'vue-resource';

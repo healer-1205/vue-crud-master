@@ -61,7 +61,12 @@
             >
               Delete
             </router-link>
-            <button class="btn btn-info" @click="changeStatus(task.id)">Done</button>
+            <button class="btn btn-info" @click="changeStatus(task.id)" v-if="task.status === 'pending'">
+              Done
+            </button>
+            <button class="btn btn-secondary" @click="changeStatus(task.id)" v-else disabled>
+              Done
+            </button>
           </td>
         </tr>
       </tbody>
@@ -114,16 +119,14 @@ export default {
         )
         .then(
           (response) => {
-            this.notifications.push({
-              type: "success",
-              message: "Task updated successfully",
+            const Id = response.body.id;
+            this.originalTasks.find((task, index) => {
+              if (task.id === Id) {
+                task.status = response.body.status;
+                this.tasks = this.originalTasks;
+              }
             });
-          },
-          (response) => {
-            this.notifications.push({
-              type: "error",
-              message: "Task not updated",
-            });
+            alert("Status Successfully Updated!!!");
           }
         );
     },

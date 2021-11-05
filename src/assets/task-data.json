@@ -15,13 +15,13 @@
         "status": "pending"
     },
     {
-        "id": 5,
-        "name": "apple",
+        "id": 2,
+        "name": "Amazon Echo Dot",
         "status": "pending"
     },
     {
-        "id": 2,
-        "name": "Amazon Echo Dot",
-        "status": "finished"
+        "id": 5,
+        "name": "apple",
+        "status": "pending"
     }
 ]
