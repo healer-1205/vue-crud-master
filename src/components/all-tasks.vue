@@ -92,11 +92,12 @@ export default {
       tasks: [],
       originalTasks: [],
       taskSearch: this.$store.state.searchValue,
-      statusSearch: this.$store.state.selectedStatus,
+      statusSearch: "",
       searchField: {
         display: "flex",
         flexDirection: "row",
       },
+      filtered: [],
     };
   },
 
@@ -110,7 +111,6 @@ export default {
         (response) => {
           this.tasks = response.body;
           this.originalTasks = response.body;
-          this.searchStatus();
           this.searchTasks();
         },
         () => {}
